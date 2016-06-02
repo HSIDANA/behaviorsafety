@@ -50,7 +50,7 @@
     <div class = "col" style = "margin-right: -10px">
     <label class="item item-input item-select" >
       <div class="input-label" style = "color: #29a329; font-size : 14px">
-        Behavior
+        Hazards
       </div>
          <select ng-options="behavior for behavior in behaviors" ng-model="data.option"  required	>
         <option   value="{{behavior}}">{{behavior}}</option> 
@@ -70,7 +70,14 @@
   <input type="radio" ng-model="data.safety" name="type" style = "color: #29a329;" value="Unobserved"> Unobserved
 </div>
 </div>
+<div class ="row" style = "margin-left: -5px">
+  <div class ="col">
+    <label class="item item-input" style = "color: #29a329; font-size : 14px" required>
+      <input type = "text" placeholder="Observations" style = "color: #29a329; font-size : 14px" ng-model="data.observations" >
+    </label>
+</div>
 
+</div>
 <div class ="row" style = "margin-left: -5px">
   <div class ="col">
     <label class="item item-input" style = "color: #29a329; font-size : 14px" required>

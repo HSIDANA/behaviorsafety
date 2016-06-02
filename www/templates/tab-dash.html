@@ -1,6 +1,6 @@
 
-<ion-view title="Safe@Scneider" ng-init="Initialize4()" cache-view="false">
-<ion-nav-bar class="bar-stable">  </ion-nav-bar>
+<ion-view title="Safe@Scneider" ng-init="Initialize1()" cache-view="false">
+ <ion-nav-bar class="bar-stable">  </ion-nav-bar>
 <!-- //https://github.com/dangrossman/bootstrap-daterangepicker/blob/master/website/index.html -->
 
 
@@ -27,32 +27,29 @@
 
 
       <div data-tap-disabled="true"> </div>
-      <div class = "col">
-        <label class="item item-input item-select">
-          <div class="input-label"  style = "color: #29a329; font-size : 14px">
-            Location
-          </div>
-   <!--    <select  ng-model="report.managers"  class="form-control" > 
-        <option   ng-repeat="managers in managers track by $index" value="{{managers}}">{{managers}}</option> 
-      </select> -->
-      <select ng-options="plant for plant in plants" ng-model="data.option"  ng-change="change()" required>
-        <option   value="{{plant}}">{{plant}}</option> 
+
+
+  <div class = "col">
+      <label class="item item-input item-select">
+        <div class="input-label" style = "color: #29a329; font-size : 14px">
+          Location
+        </div>
+      <select ng-options="department for department in departments" ng-model="data.optionSelected"  required  >
+        <option   value="{{department}}">{{department}}</option> 
         <select>
         </label>
       </div>
 
-              <label class="item item-input item-select">
-          <div class="input-label"  style = "color: #29a329; font-size : 14px">
-            Behaviour
-          </div>
-   <!--    <select  ng-model="report.managers"  class="form-control" > 
-        <option   ng-repeat="managers in managers track by $index" value="{{managers}}">{{managers}}</option> 
-      </select> -->
-      <select ng-options="plant for plant in plants" ng-model="data.option"  ng-change="change()" required>
-        <option   value="{{plant}}">{{plant}}</option> 
-        <select>
-        </label>
+    <div class = "col" style = "margin-right: -10px">
+    <label class="item item-input item-select" >
+      <div class="input-label" style = "color: #29a329; font-size : 14px">
+        Hazards
       </div>
+         <select ng-options="behavior for behavior in behaviors" ng-model="data.option"  required >
+        <option   value="{{behavior}}">{{behavior}}</option> 
+      </select>
+    </label>
+  </div></div>
 
       <div class = "row" style = "margin-left: -5px">
   <!--     <div class = "col">
@@ -95,10 +92,12 @@
 </div>
 </div>
 
-    <center><img src = "http://cloud.addictivetips.com/wp-content/uploads/2009/12/Pie-Chart.jpg"></center>
-    
+<center>
+   <h1 class="title">This pie chart illustrates percentage of </h1><h1 class="title" style = "color:#00FF33">{{data.option}}</p> <h1 class = "title">hazards in </h1><h1 class = "title" style = "color:#00FF33">{{data.optionSelected}}</h1><h1 class = "title"> safely done, unsafely done and unobserved.</h1><zingchart id = "chart-1" zc-json = "myJson" zc-height = 500 zc-width = 600 ></zingchart>
+     
+</center>
 
-<zingchart id = "myChart" zc-json = "myJson" zc-height = 500 zc-width = 600 ></zingchart>
+
 
 <!-- <button class="button button-assertive" ng-click="exportToExcel('table1')">
    download

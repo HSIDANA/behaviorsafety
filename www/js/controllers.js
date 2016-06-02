@@ -1,8 +1,61 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, $ionicLoading, $compile, $ionicHistory, $http, $firebaseArray) {
 
-$scope.myJson = {
+  $scope.myGoBack = function() {
+    $ionicHistory.goBack();
+  };
+
+   $scope.myHome = function() {
+ $location.path( '/login');
+  };
+
+  $scope.settings = {
+    enableFriends: true
+  };
+    $scope.departments = [];
+     $scope.behaviors = [];
+$scope.Initialize1 = function() {
+   
+ var refr = new Firebase("https://behaviourbased.firebaseio.com");
+   refr.authWithPassword({
+  "email": "s.harshita.89@gmail.com",
+  "password": "Harshita24"
+}, function(error, authData) {
+  if (error) {
+   // alert("Login Failed!", error);
+  } else {
+   // alert("Authenticated successfully with payload:", authData);
+  }
+});
+var ref1 = refr.child("locations");
+
+var users1 = $firebaseArray(ref1);
+users1.$loaded()
+    .then(function(){
+        angular.forEach(users1, function(user1) {
+            $scope.departments.push(user1.name);
+        })
+    });
+
+    var ref2 = refr.child("behaviors");
+
+var users2 = $firebaseArray(ref2);
+users2.$loaded()
+    .then(function(){
+        angular.forEach(users2, function(user2) {
+            $scope.behaviors.push(user2.name);
+        })
+    });
+// typeArray.$loaded().then( function (data) {
+  
+//             $scope.department = data;
+//             var a = $scope.department.name ;
+//             alert(a);
+//         });
+};
+
+  $scope.myJson = {
         globals: {
             shadow: false,
             fontFamily: "Verdana",
@@ -34,19 +87,21 @@ $scope.myJson = {
             }
         },
         series: [{
-            text: "Safely done",
+            text: "Safely Done",
             values: [1],
-            backgroundColor: "#FA6E6E #FA9494",
+            backgroundColor: "#FF3399 #FF3399",
         }, {
-            text: "Unsafely done",
+            text: "Unsafely Done",
             values: [2],
-            backgroundColor: "#F1C795 #feebd2"
+            backgroundColor: "#CCFF66 #CCFF66"
         }, {
             text: "Unobserved",
             values: [4],
-            backgroundColor: "#FDAA97 #FC9B87"
+            backgroundColor: "#000066 #000066"
         }]
     };
+
+
 
 
 })
@@ -93,9 +148,9 @@ $scope.Initialize = function() {
   "password": "Harshita24"
 }, function(error, authData) {
   if (error) {
-    alert("Login Failed!", error);
+   // alert("Login Failed!", error);
   } else {
-    alert("Authenticated successfully with payload:", authData);
+   // alert("Authenticated successfully with payload:", authData);
   }
 });
 var ref1 = refr.child("locations");
@@ -135,21 +190,22 @@ $scope.submit = function()
     var y = date.getFullYear();
  var st = $scope.data.safety;
  var comments = $scope.data.comments;
-alert(st);
+
  var refr = new Firebase("https://behaviourbased.firebaseio.com");
    refr.authWithPassword({
   "email": "s.harshita.89@gmail.com",
   "password": "Harshita24"
 }, function(error, authData) {
   if (error) {
-    alert("Login Failed!", error);
+    //alert("Login Failed!", error);
   } else {
-    alert("Authenticated successfully with payload:", authData);
+    //alert("Authenticated successfully with payload:", authData);
   }
 });
-if ($scope.data.optionSelected == "Gepps CX")
+
+if ($scope.data.optionSelected == "Field Services WA")
 {
-  var r = refr.child("GeppsCross");
+  var r = refr.child("Field Services WA");
   if ($scope.data.option == "Chemical")
   {
     var rc = r.child("Chemical");
@@ -162,9 +218,9 @@ if ($scope.data.optionSelected == "Gepps CX")
 
     })
   }
-    else if ($scope.data.option == "General")
+    else if ($scope.data.option == "Motion")
   {
-    var rc = r.child("General");
+    var rc = r.child("Motion");
     rc.push({
       month:m,
       date: d,
@@ -175,9 +231,9 @@ if ($scope.data.optionSelected == "Gepps CX")
     })
   }
 
-  else ($scope.data.option  == "Plant")
+  else if ($scope.data.option  == "Mechanical")
   {
-    var rc = r.child("Plant");
+    var rc = r.child("Mechanical");
     rc.push({
       month:m,
       date: d,
@@ -187,12 +243,99 @@ if ($scope.data.optionSelected == "Gepps CX")
 
     })
   }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+
 }
 
-if ($scope.data.optionSelected == "WA DC")
+if ($scope.data.optionSelected == "Field Services - NSW")
 {
-  var r = refr.child("WADC");
-  if (data.option == "Chemical")
+  var r = refr.child("Field Services - NSW");
+  if ($scope.data.option == "Chemical")
   {
     var rc = r.child("Chemical");
     rc.push({
@@ -204,9 +347,9 @@ if ($scope.data.optionSelected == "WA DC")
 
     })
   }
-    else if ($scope.data.option  == "General")
+    else if ($scope.data.option == "Motion")
   {
-    var rc = r.child("General");
+    var rc = r.child("Motion");
     rc.push({
       month:m,
       date: d,
@@ -217,9 +360,350 @@ if ($scope.data.optionSelected == "WA DC")
     })
   }
 
-  else ($scope.data.option  == "Plant")
+  else if ($scope.data.option  == "Mechanical")
   {
-    var rc = r.child("Plant");
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+
+}
+if ($scope.data.optionSelected == "Field Services - Vic")
+{
+  var r = refr.child("Field Services - Vic");
+  if ($scope.data.option == "Chemical")
+  {
+    var rc = r.child("Chemical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option == "Motion")
+  {
+    var rc = r.child("Motion");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+
+  else if ($scope.data.option  == "Mechanical")
+  {
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+
+}
+if ($scope.data.optionSelected == "Field Services - SA")
+{
+  var r = refr.child("Field Services - SA");
+  if ($scope.data.option == "Chemical")
+  {
+    var rc = r.child("Chemical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option == "Motion")
+  {
+    var rc = r.child("Motion");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+
+  else if ($scope.data.option  == "Mechanical")
+  {
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
     rc.push({
       month:m,
       date: d,
@@ -231,8 +715,516 @@ if ($scope.data.optionSelected == "WA DC")
   }
 }
 
+if ($scope.data.optionSelected == "Gepps Cross - Manufacturing")
+{
+  var r = refr.child("Gepps Cross - Manufacturing");
+  if ($scope.data.option == "Chemical")
+  {
+    var rc = r.child("Chemical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
 
+    })
+  }
+    else if ($scope.data.option == "Motion")
+  {
+    var rc = r.child("Motion");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+
+  else if ($scope.data.option  == "Mechanical")
+  {
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
   
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+
+}
+if ($scope.data.optionSelected == "Gepps Cross - DC")
+{
+  var r = refr.child("Gepps Cross - DC");
+  if ($scope.data.option == "Chemical")
+  {
+    var rc = r.child("Chemical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option == "Motion")
+  {
+    var rc = r.child("Motion");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+
+  else if ($scope.data.option  == "Mechanical")
+  {
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+
+}
+if ($scope.data.optionSelected == "Eagle Farm - Manufacturing")
+{
+  var r = refr.child("Eagle Farm - Manufacturing");
+  if ($scope.data.option == "Chemical")
+  {
+    var rc = r.child("Chemical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option == "Motion")
+  {
+    var rc = r.child("Motion");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+
+  else if ($scope.data.option  == "Mechanical")
+  {
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+}
+if ($scope.data.optionSelected == "Eagle Farm - DC")
+{
+  var r = refr.child("Eagle Farm - DC");
+  if ($scope.data.option == "Chemical")
+  {
+    var rc = r.child("Chemical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option == "Motion")
+  {
+    var rc = r.child("Motion");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+
+  else if ($scope.data.option  == "Mechanical")
+  {
+    var rc = r.child("Mechanical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+    else if ($scope.data.option  == "Electrical")
+  {
+    var rc = r.child("Electrical");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Pressure")
+  {
+    var rc = r.child("Pressure");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Temperature")
+  {
+    var rc = r.child("Temperature");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Biological")
+  {
+    var rc = r.child("Biological");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+    else if ($scope.data.option  == "Radiation")
+  {
+    var rc = r.child("Radiation");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else if ($scope.data.option  == "Sand")
+  {
+    var rc = r.child("Sand");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+      else ($scope.data.option  == "Gravity")
+  {
+    var rc = r.child("Gravity");
+    rc.push({
+      month:m,
+      date: d,
+      year:y,
+      comment: comments,
+      status: st,
+
+    })
+  }
+  
+
+} 
 };
 
 
