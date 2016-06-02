@@ -180,6 +180,7 @@ users2.$loaded()
 //         });
 };
    $scope.data = {};
+    
 $scope.submit = function()
 {
  var date = $scope.data.date ;
